@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="48dp">
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/font_title_big"
+            android:text="@string/str_inputPhoneNum" />
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/et_phoneNum"
+        style="@style/et_normal"
+        android:hint="@string/hint_inputPhoneNume"
+        android:inputType="phone" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_next"
+            style="@style/btn_normal"
+            android:text="@string/str_next" />
+
+        <com.pulan.widget.OverWatchLoadingView
+            android:id="@+id/loading_view"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_centerInParent="true"
+            app:view_color="@color/themeYellow" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_login"
+        style="@style/font_body_normal"
+        android:layout_gravity="right"
+        android:layout_marginRight="16dp"
+        android:text="@string/str_goLoginHasAccout" />
+
+</LinearLayout>

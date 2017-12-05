@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="white">#ffffff</color>
+    <color name="pulanBlack">#000000</color>
+    <color name="pulanOrange">#ffa800</color>
+    <color name="pulanGray">#7b7b7b</color>
+    <color name="pulanBlue">#00d2ff</color>
+    <color name="pulanYellow">#ffe400</color>
+    <color name="pulanRed">#ff527b</color>
+    <color name="pulanGreen">#b7f571</color>
+    <color name="gray">#D3D3D3</color>
+    <!--字体相关-->
+    <color name="font_black">#ff000000</color>
+    <color name="font_gray">#ff888888</color>
+    <color name="font_darkBlue">#0663f9</color>
+    <color name="font_orange">#f9a606</color>
+    <!--主题黄色-->
+    <color name="themeYellow">#ffffd200</color>
+    <!--主题暗黄色-->
+    <color name="themeYellowDark">#ffd3ae00</color>
+</resources>

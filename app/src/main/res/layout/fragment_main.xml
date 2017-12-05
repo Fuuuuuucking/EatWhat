@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="48dp"
+        android:text="@string/eat_time_type"
+        style="@style/font_title_big" />
+
+    <ImageView
+        android:id="@+id/iv_index"
+        android:layout_width="12dp"
+        android:layout_height="24dp"
+        android:layout_alignBottom="@+id/tv_center"
+        android:src="@drawable/menu_half" />
+
+    <ImageView
+        android:id="@+id/iv_index_right"
+        android:layout_width="12dp"
+        android:layout_height="24dp"
+        android:layout_alignBottom="@+id/tv_center"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/chart_half_left" />
+
+    <ImageView
+        android:id="@+id/iv_c3"
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/circle"
+        android:tint="@color/pulanOrange"
+        android:translationY="-30dp" />
+
+    <ImageView
+        android:id="@+id/iv_c2"
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/circle"
+        android:tint="@color/pulanOrange"
+        android:translationY="-30dp" />
+
+    <ImageView
+        android:id="@+id/iv_c1"
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/circle"
+        android:tint="@color/pulanOrange"
+        android:translationY="-30dp" />
+
+    <ImageView
+        android:id="@+id/iv_face"
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/face"
+        android:translationY="-30dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="128dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tv_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" ↑ 点我"
+            android:textColor="@color/pulanBlack"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_gift"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="4dp"
+        android:gravity="center"
+        android:text="Gift by puLan"
+        android:textColor="@color/pulanBlack"
+        android:textSize="12sp" />
+
+    <ImageView
+        android:id="@+id/iv_setting"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="16dp"
+        android:src="@drawable/img_setting" />
+
+</RelativeLayout>

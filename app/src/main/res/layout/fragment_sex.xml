@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="48dp">
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/font_title_big"
+            android:text="@string/str_sex" />
+    </RelativeLayout>
+
+    <com.pulan.widget.SexSwitch
+        android:id="@+id/switch_sex"
+        android:layout_width="148dp"
+        android:layout_height="68dp"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:id="@+id/btn_next"
+        style="@style/btn_normal"
+        android:text="@string/str_next" />
+</LinearLayout>

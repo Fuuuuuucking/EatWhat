@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="48dp">
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/font_title_big"
+            android:text="@string/str_phoneLogin" />
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/et_phoneNum"
+        style="@style/et_normal"
+        android:hint="@string/hint_inputPhoneNume"
+        android:inputType="phone" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/et_code"
+            style="@style/et_normal"
+            android:layout_width="188dp"
+            android:layout_alignBottom="@+id/btn_getCode"
+            android:hint="@string/hint_inputCode"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/btn_getCode"
+            style="@style/btn_normal"
+            android:layout_margin="0dp"
+            android:layout_toRightOf="@+id/et_code"
+            android:text="@string/str_getCode" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_login"
+            style="@style/btn_normal"
+            android:text="@string/str_login" />
+
+        <com.pulan.widget.OverWatchLoadingView
+            android:id="@+id/loading_view"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_centerInParent="true"
+            app:view_color="@color/themeYellow" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

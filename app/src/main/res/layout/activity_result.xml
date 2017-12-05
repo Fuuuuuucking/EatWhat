@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="128dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <com.github.ybq.android.spinkit.SpinKitView
+            android:id="@+id/animView"
+            style="@style/SpinKitView.Large.Circle"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_gravity="center"
+            app:SpinKit_Color="@color/themeYellow" />
+
+        <TextView
+            style="@style/font_title_big"
+            android:layout_marginTop="16dp"
+            android:text="@string/str_caculating" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_result"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <TextView
+            style="@style/font_title_big"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="36dp"
+            android:layout_marginTop="96dp"
+            android:text="@string/str_intake" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_bestEnergy"
+                style="@style/font_fuck_big_bold"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center_horizontal"
+                android:text="1688"
+                android:textColor="@color/font_orange" />
+
+            <TextView
+                style="@style/font_body_normal"
+                android:layout_alignBaseline="@+id/tv_bestEnergy"
+                android:layout_marginLeft="4dp"
+                android:layout_toRightOf="@+id/tv_bestEnergy"
+                android:text="@string/str_calorie" />
+        </RelativeLayout>
+
+        <TextView
+            style="@style/font_title_big"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="36dp"
+            android:text="@string/str_forYou" />
+
+        <RelativeLayout
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+            <Button
+                android:id="@+id/btn_iKnow"
+                style="@style/btn_normal"
+                android:text="@string/str_iKnow" />
+
+            <com.pulan.widget.OverWatchLoadingView
+                android:id="@+id/loading_view"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_centerInParent="true"
+                app:view_color="@color/themeYellow" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="156dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/bkg_ckt" />
+</RelativeLayout>

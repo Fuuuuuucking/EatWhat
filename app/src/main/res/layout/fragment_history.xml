@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="48dp">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="48dp"
+            android:text="@string/eated"
+            android:textColor="@color/pulanBlack"
+            android:textSize="24sp" />
+
+        <ImageView
+            android:id="@+id/iv_index"
+            android:layout_width="12dp"
+            android:layout_height="24dp"
+            android:layout_alignBottom="@+id/tv_title"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/menu_half" />
+    </RelativeLayout>
+
+    <com.aohanyao.jelly.library.BouncingJellyView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_history"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+    </com.aohanyao.jelly.library.BouncingJellyView>
+</LinearLayout>
