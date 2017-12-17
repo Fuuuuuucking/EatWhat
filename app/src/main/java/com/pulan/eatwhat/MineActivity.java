@@ -25,6 +25,9 @@ public class MineActivity extends BaseActivity {
     @Bind(R.id.iv_sex)
     ImageView iv_sex;
 
+    @Bind(R.id.tv_bestEnergy)
+    TextView tv_bestEnergy;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +47,7 @@ public class MineActivity extends BaseActivity {
                 //男
                 iv_sex.setImageResource(R.drawable.img_sex_man);
             }
-
+            tv_bestEnergy.setText(user.getREE() + "");
         }
     }
 

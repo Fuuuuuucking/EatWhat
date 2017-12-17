@@ -29,7 +29,6 @@ import butterknife.OnClick;
 /**
  * Created by pupu on 2017/9/22.
  */
-
 public class HistoryFragment extends BaseFragment {
 
     final static String TAG = "HistoryFragment";
@@ -95,6 +94,7 @@ public class HistoryFragment extends BaseFragment {
                         isNeedAdd = true;
                         //如果不是同一天new Model
                         model = new HistoryModel();
+                        breakfastFoods = new ArrayList<>();
                         lunchFoods = new ArrayList<>();
                         dinnerFoods = new ArrayList<>();
                         snackFoods = new ArrayList<>();

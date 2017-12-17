@@ -59,4 +59,7 @@
     <string name="str_change">确认修改</string>
     <string name="toast_setSuccess">设置成功</string>
     <string name="toast_setFailed">设置失败</string>
+    <string name="str_imSure">决定了</string>
+    <string name="str_retry">重试</string>
+    <string name="str_sugest">建议每日至少摄入:</string>
 </resources>

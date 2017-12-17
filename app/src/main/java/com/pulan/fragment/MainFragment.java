@@ -3,6 +3,7 @@ package com.pulan.fragment;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,12 +18,16 @@ import com.pulan.eatwhat.R;
 import com.pulan.eatwhat.SettingActivity;
 import com.pulan.entity.Eated;
 import com.pulan.entity.Food;
+import com.pulan.entity.User;
+import com.pulan.util.CommonUtil;
 import com.pulan.util.DataPreference;
+import com.pulan.util.Logger;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -31,6 +36,8 @@ import butterknife.OnClick;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * Created by pupu on 2017/9/22.
@@ -70,6 +77,8 @@ public class MainFragment extends BaseFragment {
     @Bind(R.id.iv_setting)
     ImageView iv_setting;
 
+    User user;
+
     //一日三餐中的哪一餐的FLAG,与数据库的字段名称对应
     private static String BREAKFAST = "breakfast";
     private static String LUNCH = "lunch";
@@ -82,6 +91,7 @@ public class MainFragment extends BaseFragment {
     //food：食物列表
     private List<Food> list_food;
     private int index = 0;
+    int randomIndex = 0;
     private Timer timer = new Timer();
     private static int FLAG_TIMER_START = 1;//定时器启动标志
     private static int FLAG_TIMER_STOP = 2;//定时器停止标志
@@ -98,6 +108,62 @@ public class MainFragment extends BaseFragment {
                             + ")");
                 }
             }
+        }
+    };
+
+
+    private DialogInterface.OnClickListener positiveListener = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            dialog.dismiss();
+            //存储吃过的历史记录
+            Eated eated = new Eated();
+            if (index >= list_food.size()) {
+                index = list_food.size() - 1;
+            }
+            Food tmpFood = list_food.get(index);
+            eated.setFood(tmpFood);
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd-HH-mm");
+            String nowTime = format.format(new Date());
+            eated.setTime(nowTime);
+            eated.setEatTime(curTime);
+            DataPreference.addEated(eated);
+            //后台悄悄存云
+            upload2Cloud();
+
+        }
+    };
+
+    /**
+     * 数据上传云端
+     */
+    private void upload2Cloud() {
+        if (CommonUtil.isNetworkAvailable() == false) {
+            CommonUtil.showToast(R.string.toast_badNet);
+            return;
+        }
+        String tmp = DataPreference.getAllEatedJsonStr();
+        user.setEatedJsonStr(tmp);
+        user.update(new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+                if (e == null) {
+                    Logger.i(TAG, "上传成功");
+                } else {
+                    Logger.i(TAG, "上传出错：" + e.toString());
+                }
+            }
+        });
+    }
+
+    private DialogInterface.OnClickListener negativeListener = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            //关闭对话框，重试
+            dialog.dismiss();
+            //变成可用
+            iv_c1.setEnabled(true);
+            chooseFlag = false;
         }
     };
 
@@ -131,6 +197,8 @@ public class MainFragment extends BaseFragment {
 
     @Override
     protected void initAllViewMembers(Bundle savedInstanceState) {
+        user = DataPreference.getUserInfo();
+
         setCurTime();
         changeUI();
 
@@ -179,10 +247,8 @@ public class MainFragment extends BaseFragment {
                 Message msg = new Message();
                 msg.what = 0x01;
                 handler.sendMessage(msg);
-                index++;
-                if (index >= list_food.size()) {
-                    index = 0;
-                }
+                Random random = new Random();
+                index = random.nextInt(list_food.size());
             }
         }, 0, 100);
     }
@@ -243,18 +309,11 @@ public class MainFragment extends BaseFragment {
                     chooseFlag = true;
                 } else {
                     iv_c1.setEnabled(false);
-                    //存储吃过的历史记录
-                    Eated eated = new Eated();
-                    if (index >= list_food.size()) {
-                        index = list_food.size() - 1;
-                    }
-                    Food tmpFood = list_food.get(index);
-                    eated.setFood(tmpFood);
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd-HH-mm");
-                    String nowTime = format.format(new Date());
-                    eated.setTime(nowTime);
-                    eated.setEatTime(curTime);
-                    DataPreference.addEated(eated);
+                    //弹出对话框
+                    CommonUtil.showCommonDialog(getActivity(),
+                            list_food.get(index).getName() + "\n" + list_food.get(index).getEnergy() + "cal",
+                            getString(R.string.str_imSure), positiveListener,
+                            getString(R.string.str_retry), negativeListener);
                 }
                 break;
         }

@@ -37,8 +37,10 @@ public class CommonDialog extends Dialog {
     public static class Builder {
         Context mContext;
         String okText;
+        String cancelText;
         String contentText;
         OnClickListener positiveClickListener;
+        OnClickListener negativeClickListener;
 
         public Builder(Context context) {
             this.mContext = context;
@@ -60,6 +62,12 @@ public class CommonDialog extends Dialog {
             return this;
         }
 
+        public Builder setCancel(String str, OnClickListener listener) {
+            cancelText = str;
+            negativeClickListener = listener;
+            return this;
+        }
+
         public CommonDialog create() {
             //内容文字
             TextView tv_content;
@@ -67,6 +75,8 @@ public class CommonDialog extends Dialog {
             ImageView iv_cancel;
             //确定按钮
             Button btn_ok;
+            //取消按钮
+            Button btn_cancel;
 
             LayoutInflater inflater = (LayoutInflater) mContext
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -80,6 +90,7 @@ public class CommonDialog extends Dialog {
             tv_content = (TextView) layout.findViewById(R.id.tv_content);
             iv_cancel = (ImageView) layout.findViewById(R.id.iv_cancel);
             btn_ok = (Button) layout.findViewById(R.id.btn_ok);
+            btn_cancel = (Button) layout.findViewById(R.id.btn_cancel);
 
             //取消对话框
             iv_cancel.setOnClickListener(new View.OnClickListener() {
@@ -96,6 +107,20 @@ public class CommonDialog extends Dialog {
 
             if (okText != null) {
                 btn_ok.setText(okText);
+            }
+
+            if (cancelText != null) {
+                btn_cancel.setText(cancelText);
+                if (negativeClickListener != null) {
+                    btn_cancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            negativeClickListener.onClick(dialog, Dialog.BUTTON_NEGATIVE);
+                        }
+                    });
+                }
+            } else {
+                btn_cancel.setVisibility(View.GONE);
             }
 
             if (positiveClickListener != null) {

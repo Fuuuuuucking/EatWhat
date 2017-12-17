@@ -122,7 +122,7 @@ public class MainActivity extends BaseActivity {
     private void exit() {
         if (!isExit) {
             isExit = true;
-            Toast.makeText(getApplicationContext(), "再按一次退出程序",
+            Toast.makeText(getApplicationContext(), "再按一次下次再吃",
                     Toast.LENGTH_SHORT).show();
             // 利用handler延迟发送更改状态信息
             handler.sendEmptyMessageDelayed(0, 2000);

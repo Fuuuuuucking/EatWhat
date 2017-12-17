@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.pulan.entity.User;
 import com.pulan.util.CommonUtil;
 import com.pulan.util.DataPreference;
+import com.pulan.util.Logger;
 import com.pulan.widget.OverWatchLoadingView;
 
 import java.text.ParseException;
@@ -50,6 +51,8 @@ public class ResultActivity extends BaseActivity {
                 case MSG_SAVE_FAILED:
                     break;
                 case MSG_SAVE_SUCCESS:
+                    //保存本地
+                    DataPreference.setUserInfo(user);
                     //关闭页面，跳至主页
                     start2Activity(MainActivity.class);
                     finish();
@@ -96,8 +99,6 @@ public class ResultActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_iKnow:
-                //保存本地
-                DataPreference.setUserInfo(user);
                 //隐藏自己
                 btn_iKnow.setVisibility(View.GONE);
                 //开启动画
@@ -107,6 +108,8 @@ public class ResultActivity extends BaseActivity {
                     @Override
                     public void done(String s, BmobException e) {
                         if (e == null) {
+                            //设置objectId
+                            user.setObjectId(s);
                             handler.sendEmptyMessage(MSG_SAVE_SUCCESS);
                         } else {
                             Log.i(TAG, "请求失败：" + e.toString());

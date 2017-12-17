@@ -229,6 +229,34 @@ public class DataPreference {
     }
 
     /**
+     * 获取json数据集，String形式返回
+     *
+     * @return
+     */
+    public static String getAllEatedJsonStr() {
+        SharedPreferences preferences = MyApplication.getInstance().getSharedPreferences("allEated", Context.MODE_PRIVATE);
+        String tmp = preferences.getString("jsonInfo", "");
+        return tmp;
+    }
+
+    /**
+     * 设置吃过的历史
+     *
+     * @param jsonStr
+     */
+    public static void setAllEatedJsonStr(String jsonStr) {
+        SharedPreferences preferences = MyApplication.getInstance().getSharedPreferences("allEated", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        //转json
+        if (jsonStr == null) {
+            editor.putString("jsonInfo", "");
+        } else {
+            editor.putString("jsonInfo", jsonStr);
+        }
+        editor.commit();
+    }
+
+    /**
      * 存储吃过的历史记录列表
      *
      * @param list

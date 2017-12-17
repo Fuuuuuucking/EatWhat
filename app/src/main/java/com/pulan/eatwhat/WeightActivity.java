@@ -15,8 +15,10 @@ import com.pulan.widget.LoadingButton;
 import com.pulan.widget.RulerView;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * Created by pulan on 17/12/1.
@@ -104,9 +106,9 @@ public class WeightActivity extends BaseActivity {
                 user.setWeight(weight);
                 DataPreference.setUserInfo(user);
                 btn_done.setEnabled(false);
-                user.save(new SaveListener<String>() {
+                user.update(new UpdateListener() {
                     @Override
-                    public void done(String s, BmobException e) {
+                    public void done(BmobException e) {
                         if (e == null) {
                             handler.sendEmptyMessage(MSG_SAVE_SUCCESS);
                         } else {
@@ -119,5 +121,13 @@ public class WeightActivity extends BaseActivity {
         });
     }
 
+    @OnClick({R.id.iv_cancel})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_cancel:
+                finish();
+                break;
+        }
+    }
 
 }

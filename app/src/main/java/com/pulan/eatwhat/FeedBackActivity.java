@@ -63,10 +63,22 @@ public class FeedBackActivity extends BaseActivity {
         dialog = new ProgressDialog(this);
         dialog.setMessage("正在反馈...");
         //弹出键盘
-        CommonUtil.showSoftKeyboard(et_feedback);
+        getWindow().getDecorView().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                CommonUtil.showSoftKeyboard(et_feedback);
+            }
+        }, 100);
     }
 
-    @OnClick({R.id.btn_feedback,R.id.iv_cancel})
+    @Override
+    public void finish() {
+        //隐藏键盘
+        CommonUtil.hideSoftInputFromWindow(this, et_feedback.getWindowToken());
+        super.finish();
+    }
+
+    @OnClick({R.id.btn_feedback, R.id.iv_cancel})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_cancel:

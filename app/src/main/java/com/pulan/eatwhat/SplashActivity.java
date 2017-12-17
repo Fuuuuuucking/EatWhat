@@ -12,6 +12,7 @@ import com.pulan.entity.Food;
 import com.pulan.entity.PhoneInfo;
 import com.pulan.entity.User;
 import com.pulan.util.DataPreference;
+import com.pulan.util.Logger;
 
 import java.util.List;
 
@@ -76,7 +77,6 @@ public class SplashActivity extends BaseActivity {
         //获取本地食物列表
         foodList = DataPreference.getAllFoods();
         getCloudFood();
-
     }
 
     /**

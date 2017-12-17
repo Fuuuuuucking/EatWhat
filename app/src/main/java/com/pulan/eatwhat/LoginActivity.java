@@ -13,12 +13,17 @@ import android.widget.EditText;
 import com.pulan.entity.User;
 import com.pulan.util.CommonUtil;
 import com.pulan.util.DataPreference;
+import com.pulan.util.Logger;
 import com.pulan.widget.OverWatchLoadingView;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobSMS;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.UpdateListener;
 
@@ -41,6 +46,7 @@ public class LoginActivity extends BaseActivity {
     OverWatchLoadingView loadingView;
 
     String phoneNum, confirmCode;
+    User user;
     //60s倒计时
     CountDownTimer downTimer;
 
@@ -49,16 +55,42 @@ public class LoginActivity extends BaseActivity {
     final static int MSG_VERIFY_FAILED = 0x1003;//验证验证码失败
     final static int MSG_RECEIVE_SMS_TIMETICK = 0x1004;//走时
     final static int MSG_RECEIVE_SMS_TIMEOUT = 0x1005;//倒计时完毕
+    final static int MSG_GO_MAIN = 0x1006;//跳转至主页
     Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
-                case MSG_VERIFY_SUCCESS:
-                    //验证成功即登录成功
+                case MSG_GO_MAIN:
                     CommonUtil.showToast(R.string.toast_loginSuccess);
                     loadingView.end();
                     start2Activity(MainActivity.class);
                     finish();
+                    break;
+                case MSG_VERIFY_SUCCESS:
+                    //验证成功即登录成功
+                    //去获取用户的吃过的记录
+                    BmobQuery<User> query = new BmobQuery<>();
+                    query.setLimit(1);
+                    query.addWhereEqualTo("phoneNum", phoneNum);
+                    query.findObjects(new FindListener<User>() {
+                        @Override
+                        public void done(List<User> list, BmobException e) {
+                            if (e == null) {
+                                if (list != null) {
+                                    User user = list.get(0);
+                                    //本地存储
+                                    DataPreference.setUserInfo(user);
+                                    //存储吃过的历史
+                                    DataPreference.setAllEatedJsonStr(user.getEatedJsonStr());
+                                    handler.sendEmptyMessage(MSG_GO_MAIN);
+                                }
+                            } else {
+                                Logger.i(TAG, "获取数据出错:" + e.toString());
+                                //提示出错，用户可以重试
+
+                            }
+                        }
+                    });
                     break;
                 case MSG_VERIFY_FAILED:
                     CommonUtil.showToast(R.string.toast_confirmCodeErr);
@@ -118,7 +150,8 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void initData() {
-        phoneNum = getIntent().getStringExtra("phoneNum");
+        phoneNum = getIntent().getExtras().getString("phoneNum");
+        user = (User) getIntent().getExtras().getSerializable("user");
     }
 
     private void initView() {
@@ -142,25 +175,22 @@ public class LoginActivity extends BaseActivity {
                 phoneNum = et_phoneNum.getText().toString().trim();
                 if (!phoneNum.equals("") && CommonUtil.isPhoneNum(phoneNum)) {
                     //本地存储一下
-                    User user = DataPreference.getUserInfo();
-                    if (user == null) {
-                        user = new User();
-                    }
                     user.setPhoneNum(phoneNum);
                     DataPreference.setUserInfo(user);
-                    //隐藏自己
-                    btn_login.setVisibility(View.GONE);
-                    //开启加载动画
-                    loadingView.start();
                     //验证验证码
                     confirmCode = et_code.getText().toString().trim();
                     if (confirmCode.length() != 6) {
                         //提示输入6位验证码
                         CommonUtil.showToast(R.string.toast_confirmCodeErr);
+                        return;
                     } else {
                         //去验证验证码是否正确
                         verifySMSCode();
                     }
+                    //隐藏自己
+                    btn_login.setVisibility(View.GONE);
+                    //开启加载动画
+                    loadingView.start();
                 } else {
                     //提示电话号码有误
                     CommonUtil.showToast(R.string.toast_phoneNumIsErr);

@@ -34,6 +34,11 @@ public class User extends BmobObject {
      */
     int REE;
 
+    /**
+     * 吃过的历史数据
+     */
+    String eatedJsonStr;
+
     public User() {
     }
 
@@ -83,5 +88,13 @@ public class User extends BmobObject {
 
     public void setREE(int REE) {
         this.REE = REE;
+    }
+
+    public String getEatedJsonStr() {
+        return eatedJsonStr;
+    }
+
+    public void setEatedJsonStr(String eatedJsonStr) {
+        this.eatedJsonStr = eatedJsonStr;
     }
 }

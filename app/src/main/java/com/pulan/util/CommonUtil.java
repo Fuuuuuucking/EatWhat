@@ -1,5 +1,7 @@
 package com.pulan.util;
 
+import android.app.Activity;
+import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
@@ -8,6 +10,8 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
+import android.os.IBinder;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -66,6 +70,20 @@ public class CommonUtil {
         boolean isOpen = imm.isActive();//isOpen若返回true，则表示输入法打开
         if (isOpen == true) {
             imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
+
+    /**
+     * 隐藏软键盘
+     *
+     * @param activity    目标页面
+     * @param windowToken 页面上的任意view的windowToken
+     * @return
+     */
+    public static void hideSoftInputFromWindow(Activity activity, IBinder windowToken) {
+        InputMethodManager imm = (InputMethodManager) MyApplication.getInstance().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
         }
     }
 
@@ -204,6 +222,29 @@ public class CommonUtil {
         CommonDialog.Builder builder = new CommonDialog.Builder(context);
         CommonDialog dialog = builder.setContent(content)
                 .setOk(okText, listener)
+                .setCancel(null, null)
+                .create();
+        dialog.show();
+        return dialog;
+    }
+
+    /**
+     * 显示通用对话框
+     *
+     * @param context
+     * @param content
+     * @param okText
+     * @param okListener
+     * @param cancelText
+     * @param cancelListener
+     * @return
+     */
+    public static CommonDialog showCommonDialog(Context context, String content, String okText, DialogInterface.OnClickListener okListener,
+                                                String cancelText, DialogInterface.OnClickListener cancelListener) {
+        CommonDialog.Builder builder = new CommonDialog.Builder(context);
+        CommonDialog dialog = builder.setContent(content)
+                .setOk(okText, okListener)
+                .setCancel(cancelText, cancelListener)
                 .create();
         dialog.show();
         return dialog;
@@ -238,6 +279,39 @@ public class CommonUtil {
             }
         }
         return false;
+    }
+
+    /**
+     * 震动milliseconds毫秒
+     *
+     * @param activity
+     * @param milliseconds
+     */
+    public static void vibrateStart(Activity activity, long milliseconds) {
+        Vibrator vib = (Vibrator) activity.getSystemService(Service.VIBRATOR_SERVICE);
+        vib.vibrate(milliseconds);
+    }
+
+    /**
+     * 以pattern[]方式震动
+     *
+     * @param activity
+     * @param pattern
+     * @param repeat
+     */
+    public static void vibrateStart(Activity activity, long[] pattern, int repeat) {
+        Vibrator vib = (Vibrator) activity.getSystemService(Service.VIBRATOR_SERVICE);
+        vib.vibrate(pattern, repeat);
+    }
+
+    /**
+     * 取消震动
+     *
+     * @param activity
+     */
+    public static void virateCancel(Activity activity) {
+        Vibrator vib = (Vibrator) activity.getSystemService(Service.VIBRATOR_SERVICE);
+        vib.cancel();
     }
 
 }

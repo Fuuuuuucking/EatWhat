@@ -43,6 +43,7 @@ public class PhoneNumFragment extends BaseFragment {
     String phoneNum;
     @Bind(R.id.loading_view)
     public OverWatchLoadingView loadingView;
+    User user;
 
     final static int MSG_REQUESTSMS_SUCCESS = 0x1001;
     final static int MSG_REQUESTSM = 0x1002;//请求验证码
@@ -115,7 +116,12 @@ public class PhoneNumFragment extends BaseFragment {
         public void onClick(DialogInterface dialog, int which) {
             //跳转登录页面
             Intent it = new Intent(getActivity(), LoginActivity.class);
-            it.putExtra("phoneNum", phoneNum);
+            Bundle bundle = new Bundle();
+            bundle.putString("phoneNum", phoneNum);
+            if (user != null) {
+                bundle.putSerializable("user", user);
+            }
+            it.putExtras(bundle);
             startActivity(it);
             //关闭页面
             getActivity().finish();
@@ -161,6 +167,7 @@ public class PhoneNumFragment extends BaseFragment {
                                 Log.i(TAG, "查询成功");
                                 if (list != null && list.size() > 0) {
                                     //已经注册过，提示是否跳转至登录页面
+                                    PhoneNumFragment.this.user = list.get(0);
                                     handler.sendEmptyMessage(MSG_ALREADY_REGISTER);
                                 } else {
                                     //没注册过，去请求验证码
